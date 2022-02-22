@@ -1,21 +1,22 @@
 <template>
   <h1>Vue メモ</h1>
   <div class="memo-list">
-    <ul  class="memo-list__container">
-     
-     <li v-for="oneMemo in allMemos" class="memo">
-        <div class="memo__checkbox">
-         <input type="checkbox" />
+    <ul class="memo-list__container">
+   
+      <li v-for="(memoItem, index) in allMemos" :key="index" class="memo">
+              <div class="memo__checkbox">
+          <input type="checkbox" />
         </div>
-        <div class="memo__text">{{ oneMemo }}</div>
+        <div class="memo__text">{{ memoItem }}</div>
         <button class="memo__delete">削除</button>
      </li>
-      
-      
-     </ul>
+    
+     
+    </ul>
+    
     <div class="add-memo-field">
-      <input class="add-memo-field__input" type="text"/>
-      <button class="add-memo-field__button" v-on:click="addedMemo">追加</button>
+      <input class="add-memo-field__input" v-model="text" type="text" />
+      <button class="add-memo-field__button" v-on:click="addMemo">追加</button>
     </div>
   </div>
 </template>
@@ -24,14 +25,17 @@
 export default {
   data() {
     return {
-      allMemos : [
-         
-      ],
+      text: "",
+      allMemos: ['ひき肉を300g買う','ホウレンソウを1束買う','ピーマンを2個買う'],
     }
   },
   methods: {
-    addedMemo: function () {
-       
+    addMemo: function () {
+     alert(this.text);
+     this.allMemos.push(
+        this.text
+     );
+     this.text = "";
     }
     
   },
