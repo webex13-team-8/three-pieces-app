@@ -8,7 +8,7 @@
           <input type="checkbox" />
         </div>
         <div class="memo__text">{{ memoItem }}</div>
-        <button class="memo__delete">削除</button>
+        <button class="memo__delete" v-on:click="deleteMemo(index)">削除</button>
      </li>
     
      
@@ -33,9 +33,13 @@ export default {
     addMemo: function () {
          this.allMemos.push(
         this.text
-     );
+         );
      this.text = "";
-    }
+    },
+
+    deleteMemo: function (index) {
+         this.allMemos.splice(index , 1)
+    },
     
   },
 }
