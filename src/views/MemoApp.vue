@@ -26,13 +26,12 @@ export default {
   data() {
     return {
       text: "",
-      allMemos: ['ひき肉を300g買う','ホウレンソウを1束買う','ピーマンを2個買う'],
+      allMemos: [],
     }
   },
   methods: {
     addMemo: function () {
-     alert(this.text);
-     this.allMemos.push(
+         this.allMemos.push(
         this.text
      );
      this.text = "";
