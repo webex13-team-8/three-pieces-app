@@ -2,18 +2,17 @@
   <h1>Vue メモ</h1>
   <div class="memo-list">
     <ul class="memo-list__container">
-   
       <li v-for="(memoItem, index) in allMemos" :key="index" class="memo">
-              <div class="memo__checkbox">
+        <div class="memo__checkbox">
           <input type="checkbox" />
         </div>
         <div class="memo__text">{{ memoItem }}</div>
-        <button class="memo__delete" v-on:click="deleteMemo(index)">削除</button>
-     </li>
-    
-     
+        <button class="memo__delete" v-on:click="deleteMemo(index)">
+          削除
+        </button>
+      </li>
     </ul>
-    
+
     <div class="add-memo-field">
       <input class="add-memo-field__input" v-model="text" type="text" />
       <button class="add-memo-field__button" v-on:click="addMemo">追加</button>
@@ -31,16 +30,13 @@ export default {
   },
   methods: {
     addMemo: function () {
-         this.allMemos.push(
-        this.text
-         );
-     this.text = "";
+      this.allMemos.push(this.text)
+      this.text = ""
     },
 
     deleteMemo: function (index) {
-         this.allMemos.splice(index , 1)
+      this.allMemos.splice(index, 1)
     },
-    
   },
 }
 </script>
