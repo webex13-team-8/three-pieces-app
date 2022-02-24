@@ -4,9 +4,11 @@
     <ul class="memo-list__container">
       <li v-for="(memoItem, index) in allMemos" :key="index" class="memo">
         <div class="memo__checkbox">
-          <input type="checkbox" />
+          <input type="checkbox" @change="swichisLineActive" />
         </div>
-        <div class="memo__text">{{ memoItem }}</div>
+        <div v-bind:class="{ memo__textDone: isLineActive }">
+          <div class="memo__text">{{ memoItem }}</div>
+        </div>
         <button class="memo__delete" v-on:click="deleteMemo(index)">
           削除
         </button>
@@ -26,6 +28,8 @@ export default {
     return {
       text: "",
       allMemos: [],
+      isLineActive: false,
+      // isLineActive: true,
     }
   },
   methods: {
@@ -36,6 +40,10 @@ export default {
 
     deleteMemo: function (index) {
       this.allMemos.splice(index, 1)
+    },
+
+    swichisLineActive: function () {
+      this.isLineActive = !this.isLineActive
     },
   },
 }
@@ -75,7 +83,7 @@ export default {
   text-align: left;
 }
 
-.memo__text--done {
+.memo__textDone {
   text-decoration-line: line-through;
 }
 
