@@ -16,8 +16,19 @@
     </ul>
 
     <div class="add-memo-field">
-      <input class="add-memo-field__input" v-model="text" type="text" />
-      <button class="add-memo-field__button" v-on:click="addMemo">追加</button>
+      <input
+        class="add-memo-field__input"
+        v-model="text"
+        type="text"
+        @input="onInput"
+      />
+      <button
+        class="add-memo-field__button"
+        v-on:click="addMemo"
+        :disabled="activateSubmit"
+      >
+        追加
+      </button>
     </div>
   </div>
 </template>
@@ -29,13 +40,14 @@ export default {
       text: "",
       allMemos: [],
       isLineActive: false,
-      // isLineActive: true,
+      activateSubmit: true,
     }
   },
   methods: {
     addMemo: function () {
       this.allMemos.push(this.text)
       this.text = ""
+      //  this.e.target.value = 0;
     },
 
     deleteMemo: function (index) {
@@ -44,6 +56,15 @@ export default {
 
     swichisLineActive: function () {
       this.isLineActive = !this.isLineActive
+    },
+
+    onInput(e) {
+      console.log(e.target.value)
+      if (e.target.value.length === 0) {
+        this.activateSubmit = true
+      } else if (e.target.value.length !== 0) {
+        this.activateSubmit = false
+      }
     },
   },
 }
