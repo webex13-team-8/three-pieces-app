@@ -3,12 +3,23 @@
   <div class="memo-list">
     <ul class="memo-list__container">
       <li v-for="(memoItem, index) in allMemos" :key="index" class="memo">
-        <div class="memo__checkbox">
+        <input
+          type="checkbox"
+          v-model="isLineActive"
+          @change="swichisLineActive"
+        />
+        <span v-bind:class="{ memo__textDone: isLineActive }">
+          <div class="memo__text">
+            {{ memoItem }}
+          </div>
+        </span>
+
+        <!-- <div class="memo__checkbox">
           <input type="checkbox" @change="swichisLineActive" />
         </div>
-        <div v-bind:class="{ memo__textDone: isLineActive }">
+        <span v-bind:class="{ memo__textDone: isLineActive }">
           <div class="memo__text">{{ memoItem }}</div>
-        </div>
+        </span> -->
         <button class="memo__delete" v-on:click="deleteMemo(index)">
           削除
         </button>
@@ -16,19 +27,8 @@
     </ul>
 
     <div class="add-memo-field">
-      <input
-        class="add-memo-field__input"
-        v-model="text"
-        type="text"
-        @input="onInput"
-      />
-      <button
-        class="add-memo-field__button"
-        v-on:click="addMemo"
-        :disabled="activateSubmit"
-      >
-        追加
-      </button>
+      <input class="add-memo-field__input" v-model="text" type="text" />
+      <button class="add-memo-field__button" v-on:click="addMemo">追加</button>
     </div>
   </div>
 </template>
@@ -40,14 +40,13 @@ export default {
       text: "",
       allMemos: [],
       isLineActive: false,
-      activateSubmit: true,
+      // isLineActive: true,
     }
   },
   methods: {
     addMemo: function () {
       this.allMemos.push(this.text)
       this.text = ""
-      this.activateSubmit = true
     },
 
     deleteMemo: function (index) {
@@ -56,15 +55,6 @@ export default {
 
     swichisLineActive: function () {
       this.isLineActive = !this.isLineActive
-    },
-
-    onInput(e) {
-      console.log(e.target.value)
-      if (e.target.value.length === 0) {
-        this.activateSubmit = true
-      } else if (e.target.value.length !== 0) {
-        this.activateSubmit = false
-      }
     },
   },
 }
@@ -104,7 +94,7 @@ export default {
   text-align: left;
 }
 
-.memo__textDone {
+li > span.memo__textDone {
   text-decoration-line: line-through;
 }
 
