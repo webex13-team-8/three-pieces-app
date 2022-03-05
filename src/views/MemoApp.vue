@@ -2,33 +2,30 @@
   <h1>Vue メモ</h1>
   <div class="memo-list">
     <ul class="memo-list__container">
-      <li v-for="(memoItem, index) in allMemos" :key="index" class="memo">
-        <input
-          type="checkbox"
-          v-model="isLineActive"
-          @change="swichisLineActive"
-        />
-        <span v-bind:class="{ memo__textDone: isLineActive }">
-          <div class="memo__text">
-            {{ memoItem }}
-          </div>
+      <li v-for="(todo, index) in allMemos" :key="index" class="memo">
+        <input type="checkbox" v-model="todo.isDone" />
+        <span v-bind:class="{ Done: todo.isDone }">
+          <div class="memo__text">{{ todo.item }}</div>
         </span>
-
-        <!-- <div class="memo__checkbox">
-          <input type="checkbox" @change="swichisLineActive" />
-        </div>
-        <span v-bind:class="{ memo__textDone: isLineActive }">
-          <div class="memo__text">{{ memoItem }}</div>
-        </span> -->
         <button class="memo__delete" v-on:click="deleteMemo(index)">
           削除
         </button>
       </li>
     </ul>
-
     <div class="add-memo-field">
-      <input class="add-memo-field__input" v-model="text" type="text" />
-      <button class="add-memo-field__button" v-on:click="addMemo">追加</button>
+      <input
+        class="add-memo-field__input"
+        v-model="text"
+        type="text"
+        @input="onInput"
+      />
+      <button
+        class="add-memo-field__button"
+        v-on:click="addMemo"
+        :disabled="activateSubmit"
+      >
+        追加
+      </button>
     </div>
   </div>
 </template>
@@ -39,22 +36,37 @@ export default {
     return {
       text: "",
       allMemos: [],
-      isLineActive: false,
-      // isLineActive: true,
+      isDone: false,
+      activateSubmit: true,
     }
   },
   methods: {
     addMemo: function () {
-      this.allMemos.push(this.text)
+      var todo = {
+        item: this.text,
+        isDone: false,
+      }
+      this.allMemos.push(todo)
       this.text = ""
+      this.activateSubmit = true
+      console.log(this.allMemos)
     },
 
     deleteMemo: function (index) {
       this.allMemos.splice(index, 1)
     },
 
-    swichisLineActive: function () {
-      this.isLineActive = !this.isLineActive
+    swichisDone: function () {
+      this.isDone = !this.isDone
+    },
+
+    onInput(e) {
+      console.log(e.target.value)
+      if (e.target.value.length === 0) {
+        this.activateSubmit = true
+      } else if (e.target.value.length !== 0) {
+        this.activateSubmit = false
+      }
     },
   },
 }
@@ -94,7 +106,7 @@ export default {
   text-align: left;
 }
 
-li > span.memo__textDone {
+li > span.Done {
   text-decoration-line: line-through;
 }
 
