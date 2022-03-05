@@ -47,7 +47,7 @@ export default {
     addMemo: function () {
       this.allMemos.push(this.text)
       this.text = ""
-      //  this.e.target.value = 0;
+      this.activateSubmit = true
     },
 
     deleteMemo: function (index) {
