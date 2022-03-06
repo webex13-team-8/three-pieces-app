@@ -3,24 +3,21 @@
   <div class="app">
     <div
       class="palette"
-      style="background-color: rgba(0, 0, 200, 0.5)"
       v-on:mousemove="changeColor"
       v-on:click="pickColor"
-      v-bind="paletteStyle"
+      v-bind:style="paletteStyle"
     ></div>
     <p>rgba( {{ red }}, {{ green }}, 200, 0.5 )</p>
     <div class="colors-container">
       <div
         class="mini-palette"
         v-for="color in colors"
-        <!--
+        v-bind:key="color"
         v-bind:style="{
           backgroundColor: `rgba(${color.red}, ${color.green}, 200, 0.5)`,
         }"
-        --
-      >
-        v-on:click="showColor(color)" >
-      </div>
+        v-on:click="showColor(color)"
+      ></div>
     </div>
   </div>
 </template>
