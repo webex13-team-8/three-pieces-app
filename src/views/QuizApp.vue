@@ -2,7 +2,7 @@
   <h1>Vue クイズ</h1>
   <div class="app">
     <h2>Q. {{ title }}</h2>
-    <img class="quiz-image" v-bind:src="imagePath" v-bind:alt="title" />
+    <img class="quiz-image" src="@/assets/ShibayuImage.jpeg" v-bind:alt="title" />
     <div class="container">
       <button
         v-for="select in selects"
@@ -21,7 +21,6 @@ export default {
   data() {
     return {
       title: "彼は人気YouTuber「東海オンエア」のメンバーです。名前は？",
-      image: "ShibayuImage.jpeg",
       selects: [
         {
           id: 0,
@@ -48,11 +47,6 @@ export default {
   methods: {
     clickButton: function (select) {
       this.feedback = select.feedback
-    },
-  },
-  computed: {
-    imagePath: function () {
-      return "@/assets/" + this.image
     },
   },
 }
