@@ -1,29 +1,55 @@
 <template>
   <h1>Vue クイズ</h1>
   <div class="app">
-    <h2>Q. {{ "クイズタイトル" }}</h2>
-    <img
-      class="quiz-image"
-      src="https://via.placeholder.com/300x300"
-      alt="クイズタイトル"
-    />
+    <h2>Q. {{ title }}</h2>
+    <img class="quiz-image" src="@/assets/ShibayuImage.jpeg" v-bind:alt="title" />
     <div class="container">
-      <button>
-        {{ "選択肢1" }}
-      </button>
-      <button>
-        {{ "選択肢2" }}
-      </button>
-      <button>
-        {{ "選択肢3" }}
+      <button
+        v-for="select in selects"
+        v-bind:key="select.id"
+        v-on:click="clickButton(select)"
+      >
+        {{ select.text }}
       </button>
     </div>
-    <div>{{ "答え" }}</div>
+    <div>{{ feedback }}</div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      title: "彼は人気YouTuber「東海オンエア」のメンバーです。名前は？",
+      selects: [
+        {
+          id: 0,
+          text: "てつや",
+          isCollect: false,
+          feedback: "残念！てつやはオレンジ髪が特徴です。",
+        },
+        {
+          id: 1,
+          text: "しばゆー",
+          isCollect: true,
+          feedback: "正解！！！！彼はしばゆーです。",
+        },
+        {
+          id: 2,
+          text: "虫眼鏡",
+          isCollect: false,
+          feedback: "残念！虫眼鏡は眼鏡をかけています。",
+        },
+      ],
+      feedback: "",
+    }
+  },
+  methods: {
+    clickButton: function (select) {
+      this.feedback = select.feedback
+    },
+  },
+}
 </script>
 
 <style>
